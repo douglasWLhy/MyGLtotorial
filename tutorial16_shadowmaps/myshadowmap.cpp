@@ -35,17 +35,63 @@ GLuint CubeVertexVBOID;  //顶点坐标vbo
 GLuint CubeUVVBOID;      //纹理坐标vbo
 GLuint EBOID;           //EBO
 
-// FBO
-GLuint Framebuffer = 0; //创建帧缓冲 用来存储第一次变换后的Z缓冲对象
+const GLuint WIDTH = 800;
+
+
 // Data
 // 正方体模型参数
-std::vector<glm::vec3> CubeVertex;
-std::vector<glm::vec2> CubeUV;
-std::vector<float> CubeIndices;
+std::vector<glm::vec3> CubeVertex = {
+        glm::vec3(-0.5f, -0.5f, -0.5),
+        glm::vec3(0.5f, -0.5f, -0.5),
+        glm::vec3(0.5f, 0.5f, -0.5),
+        glm::vec3(-0.5f, 0.5f, -0.5),
+        glm::vec3(-0.5f, -0.5f, 0.5),
+        glm::vec3(-0.5f, 0.5f, 0.5),
+        glm::vec3(0.5f, 0.5f, 0.5),
+        glm::vec3(0.5f, -0.5f, 0.5),
+};
+std::vector<glm::vec2> CubeUV = {
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (1.0f,0.0f),
+        glm::vec2 (1.0f,1.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+        glm::vec2 (0.0f,0.0f),
+};
+std::vector<float> CubeIndices = {
+
+};
 // 矩形模型 地板
 std::vector<glm::vec3> Ground;
 std::vector<glm::vec2> GroundUV;
+/// shadow 相关
+// FBO
+GLuint DepthFBO = 0; //创建帧缓冲 用来存储第一次变换后的Z缓冲对象
+
 // 光源
+glm::vec3 LightPos(1.2f,1.0f,2.0f);
 
 void processInput(GLFWwindow *window)
 {
@@ -73,7 +119,7 @@ void LoadSrc()
     glGenVertexArrays(1,&VAOID);
     glBindVertexArray(VAOID);
 
-
+    glGenFramebuffers(1,&DepthFBO);
 }
 
 int InitWindow() {
@@ -92,7 +138,7 @@ int InitWindow() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    window = glfwCreateWindow( 1024, 768, "Tutorial 16 - Shadows", NULL, NULL);
+    window = glfwCreateWindow( 1024, 1024, "Tutorial 16 - Shadows", NULL, NULL);
     if( window == NULL ){
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         getchar();
