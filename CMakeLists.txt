@@ -456,6 +456,25 @@ target_link_libraries(tutorial16_shadowmaps_simple
 set_target_properties(tutorial16_shadowmaps_simple PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial16_shadowmaps/")
 create_target_launcher(tutorial16_shadowmaps_simple WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial16_shadowmaps/")
 
+##myshadow mapping
+add_executable(myshadowMap tutorial16_shadowmaps/myshadowmap.cpp
+		common/shader.cpp
+		common/shader.hpp
+		common/controls.cpp
+		common/controls.hpp
+		common/texture.cpp
+		common/texture.hpp
+		common/objloader.cpp
+		common/objloader.hpp
+		common/vboindexer.cpp
+		common/vboindexer.hpp)
+target_link_libraries(myshadowMap
+		${ALL_LIBS}
+		)
+# Xcode and Visual working directories
+set_target_properties(myshadowMap PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial16_shadowmaps/")
+create_target_launcher(myshadowMap WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial16_shadowmaps/")
+
 
 # Tutorial 16
 add_executable(tutorial16_shadowmaps
